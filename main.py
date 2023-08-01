@@ -49,6 +49,8 @@ def main():
     status = "menu"
 
     clock = pygame.time.Clock()
+    pygame.font.init()
+    font1 = pygame.font.Font("assets/fonts/Unique.ttf", 100)
 
     # images load
     map_img_raw = pygame.image.load('assets/images/island.jpg')
@@ -83,6 +85,7 @@ def main():
         if keys[pygame.K_2]:
             status = "abacus"
         
+        
         if status == "menu":
             menu(screen)
         elif status == "map":
@@ -98,6 +101,17 @@ def main():
                         if mouse_pos[1] <= (bead_pos[i, col]):
                             aba.select((i, col))
                             break
+        
+        if keys[pygame.K_a]:
+            text = font1.render(str(aba.abacus_to_num()), True, (255, 255, 255))
+            screen.blit(text, (10, 10))
+
+        if keys[pygame.K_b]:
+            num = input("input num: ")
+            print("Number: "+num)
+            arr = aba.num_to_abacus(num)
+            aba.set_abacus(arr)
+
         pygame.display.update()
         clock.tick(60)
 
