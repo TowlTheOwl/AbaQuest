@@ -9,18 +9,18 @@ def menu(win):
 def map(win, map):
     win.blit(map, (0, 0))
 
-def draw_abacus(win, abacus, start_pos, width, height):
+def draw_abacus(win, abacus, start_pos, width, height, spacing):
     win.fill((65, 132, 52))
     x_interval = width/abacus.width
     bead_height = height/7.5
     bead_pos = np.zeros((7, abacus.width))
+    x_pos = start_pos[0]
 
     for i in range(abacus.width):
-        x = start_pos[0]
         y = start_pos[1]
         for top_interval in range(2):
             if abacus.upper[top_interval, i]:
-                pygame.draw.ellipse(win, (200, 200, 200), (x+x_interval*i, y, x_interval, bead_height), 0)
+                pygame.draw.ellipse(win, (200, 200, 200), (x_pos, y, x_interval, bead_height), 0)
                 y += bead_height
                 bead_pos[top_interval, i] = y
             else:
@@ -29,12 +29,14 @@ def draw_abacus(win, abacus, start_pos, width, height):
         y += bead_height/2
         for bot_interval in range(5):
             if abacus.lower[bot_interval, i]:
-                pygame.draw.ellipse(win, (200, 200, 200), (x+x_interval*i, y, x_interval, bead_height), 0)
+                pygame.draw.ellipse(win, (200, 200, 200), (x_pos, y, x_interval, bead_height), 0)
                 y += bead_height
                 bead_pos[bot_interval+2, i] = y
             else:
                 y += bead_height
                 bead_pos[bot_interval+2, i] = y
+
+        x_pos += x_interval + spacing[i]
     
     return bead_pos, x_interval
 
@@ -62,6 +64,7 @@ def main():
     start_pos = (200*scale_factor[0], 100*scale_factor[1])
     width = 1500*scale_factor[0]
     height = 800*scale_factor[1]
+    spacing = (6,) * abacus_width
 
     pygame.init()
     screen = pygame.display.set_mode(user_screen_size)
@@ -91,7 +94,7 @@ def main():
         elif status == "map":
             map(screen, map_img)
         elif status == "abacus":
-            bead_pos, x_interval = draw_abacus(screen, aba, start_pos, width, height)
+            bead_pos, x_interval = draw_abacus(screen, aba, start_pos, width, height, spacing)
             if mouse[0]:
                 mouse_pos = pygame.mouse.get_pos()
                 if start_pos[0] <= mouse_pos[0] <= (start_pos[0] + width):
