@@ -13,6 +13,9 @@ class Abacus:
 
         self.width = width
 
+    def set_abacus(self, arr):
+        self.upper = arr[:2]
+        self.lower = arr[2:]
 
     def select(self, pos):
         if pos[0] < 2:
