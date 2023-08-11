@@ -44,7 +44,7 @@ class Abacus:
             num_arr[1] = (num_arr < 5)[1]
             num_arr[num_arr>=5] -= 5
             num_arr[2:] = num_arr[2:] == self.value_vector[2:]
-            return np.logical_not(num_arr)
+            self.set_abacus(np.logical_not(num_arr))
 
     def abacus_to_num(self):
         val = np.multiply(self.value_arr, np.logical_not(self.return_abacus()))
