@@ -1,2 +1,2 @@
-# Abacus-Adventure
-A python-based video game that uses abacus to help kids learn about mathematics.
+# AbaQuest
+A python-based video game that uses abacus to help teach kids about mathematics.
